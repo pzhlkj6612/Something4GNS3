@@ -29,7 +29,7 @@ dev=$(echo $result | grep -oE "tap[0-9]+")
 echo -e "\tnew dev: $dev"
 
 sudo ip link set $dev up
-sudo ip address add 10.0.0.1/8 dev $dev
+sudo ip address add 10.0.0.100/8 dev $dev
 sudo ip route add 10.0.0.1 dev $dev
 ip address show $dev
 ip route list | grep "dev $dev"
