@@ -2,16 +2,15 @@
 
 modprobe tun
 
+echo -e "\tOld interfaces..."
 ERROR=0
 for line in $(ip link show) 
 do
 	devWTF=$(echo $line | grep -oE "tap[0-9]+")
 	if [ $devWTF ]; then
 		echo -e "\told dev: $devWTF"
-		result=$(sudo tunctl -d $devWTF 2>&1)
-		echo $result
-		if [ "$(echo $result | grep -o "busy")" == "busy" ]; then
-			echo -e "\tThere is a tap dev in this system."
+		sudo tunctl -d $devWTF 2>&1
+		if [ "1" == "$?" ]; then
 			ERROR=1
 		fi
 	fi
@@ -20,6 +19,8 @@ done
 if [ $ERROR == "1" ]; then
 	exit
 fi
+
+echo -e "\tThe new interface..."
 
 result=$(sudo tunctl)
 # do something
