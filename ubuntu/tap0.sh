@@ -1,5 +1,11 @@
 #/bin/bash
 
+# https://stackoverflow.com/questions/18215973/how-to-check-if-running-as-root-in-a-bash-script
+if [ $EUID -gt 0 ]; then
+	echo "Please run as root"
+	exit
+fi
+
 modprobe tun
 
 echo -e "\tOld interfaces..."
