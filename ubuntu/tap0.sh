@@ -9,7 +9,7 @@ fi
 modprobe tun
 
 echo -e "\tOld interfaces..."
-ERROR=0
+declare -i ERROR=0
 for line in $(ip link show) 
 do
 	devWTF=$(echo $line | grep -oE "tap[0-9]+")
@@ -22,7 +22,7 @@ do
 	fi
 done
 
-if [ $ERROR == "1" ]; then
+if [ $ERROR -eq 1 ]; then
 	exit
 fi
 
